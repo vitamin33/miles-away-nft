@@ -13,6 +13,11 @@
     "hardhat": "^2.12.4"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.0"
+    "@openzeppelin/contracts": "^4.8.0",
+    "buffer": "^6.0.3",
+    "ipfs-http-client": "^59.0.0",
+    "merge-images": "^2.0.0",
+    "node-canvas": "^2.9.0",
+    "random-js": "^2.1.0"
   }
 }
