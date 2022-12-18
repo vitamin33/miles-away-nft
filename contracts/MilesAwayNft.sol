@@ -1,6 +1,6 @@
 // SPDX-Lisence-Identifier: MIT
 // SPDX-License-Identifier: SEE LICENSE IN LICENSE
-pragma solidity 0.8.0;
+pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -11,11 +11,9 @@ contract MilesAwayNft is ERC721URIStorage {
     Counters.Counter private _tokenIdCounter;
     uint256 MAX_SUPPLY = 10;
 
-    constructor() ERC721("Miles Away NFT", "MSA") {
+    constructor() ERC721("Miles Away NFT", "MSA") {}
 
-    }
-
-    function safeMint(address to, string memory uri) public{
+    function safeMint(address to, string memory uri) public {
         uint256 tokenId = _tokenIdCounter.current();
         require(tokenId <= MAX_SUPPLY, "Sorry, all NFTs have been minted!");
         _tokenIdCounter.increment();
@@ -29,12 +27,9 @@ contract MilesAwayNft is ERC721URIStorage {
         super._burn(tokenId);
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override(ERC721URIStorage)
-        returns (string memory)
-    {
+    function tokenURI(
+        uint256 tokenId
+    ) public view override(ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
     }
 }
