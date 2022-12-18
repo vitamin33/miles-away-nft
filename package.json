@@ -2,7 +2,7 @@
   "name": "miles-away-nft",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./uploadImageToIpfs.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,6 +15,7 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.0",
     "buffer": "^6.0.3",
+    "hardhat-deploy": "^0.11.22",
     "ipfs-http-client": "^59.0.0",
     "merge-images": "^2.0.0",
     "node-canvas": "^2.9.0",
