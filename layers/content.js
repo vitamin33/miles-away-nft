@@ -2,8 +2,8 @@ module.exports = {
     metadataTemplate: (tokenId, attributes) => ({
         image: '<%IMAGE_URL%>',
         name: `NFT #${tokenId}`,
-        external_url: 'https://www.kie.codes/',
-        description: 'Please subscribe!',
+        external_url: 'https://www.miles.away/',
+        description: 'Fly-to-Earn NFT game!',
         attributes: attributes,
     }),
     layers: [
