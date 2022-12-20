@@ -2,13 +2,23 @@ import { create } from 'ipfs-http-client'
 import { Buffer } from 'buffer'
 
 import * as path from 'path'
+import * as fs from 'fs'
 
 import { generateNFTs } from './scripts/generateNfts.js'
 
 const layersPath = path.join(process.cwd(), 'layers')
 const outputPath = path.join(process.cwd(), 'output')
 
-async function uploadImageToIpfs(file) {
+export const uploadImageToIpfs = async function uploadImageToIpfs() {
+
+    let generatedFiles = await generateNFTs(1, layersPath, outputPath)
+    let filePath = generatedFiles.values().next().value
+    var file = fs.readFileSync(filePath);
+
+    console.log("Generated files path: ", generatedFiles)
+
+    
+
     /* configure Infura auth settings */
     const projectId = "2J2EcVANAs4yTjWh28m2ef2XFuf"
     const projectSecret = "11bbbf033eabf15cd50ed8d6d987b294"
@@ -33,8 +43,10 @@ async function uploadImageToIpfs(file) {
     return url
 }
 
+//module.exports = { uploadImageToIpfs }
+
 async function main() {
-  generateNFTs(1, layersPath, outputPath)
+  uploadImageToIpfs()
 }
 
 main().catch((error) => {
