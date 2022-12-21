@@ -40,9 +40,17 @@ export const uploadImageToIpfs = async function uploadImageToIpfs() {
 
     var metadataContent = fs.readFileSync(metadataPath)
     let metadataJson = JSON.parse(metadataContent)
+    console.log('Metadata JSON: ', metadataJson)
     metadataJson.image = ipfsImgUrl
+    metadataJson.external_url = ipfsImgUrl
+    console.log('Metadata JSON: ', metadataJson)
     let metadataString = JSON.stringify(metadataJson)
-    fs.writeFileSync(metadataString)
+    try {
+      fs.writeFileSync(metadataPath, metadataString)
+      console.log('JSON metadata is saved.')
+    } catch (error) {
+      console.error(err)
+    }
     metadataContent = fs.readFileSync(metadataPath)
 
     /* upload the metadata file */
