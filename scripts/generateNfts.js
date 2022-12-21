@@ -11,7 +11,7 @@ const outputPath = path.join(process.cwd(), 'output')
 const generateNFTs = async (num, layersPath, outputPath) => {
 
     let generated = new Set()
-    let generatedImgFiles = new Set()
+    let generatedMetaFiles = new Set()
 
     for (let tokenId=0; tokenId<num; tokenId++) {
         console.log(`Generating NFT #${tokenId} …`)
@@ -31,14 +31,16 @@ const generateNFTs = async (num, layersPath, outputPath) => {
                 imgPath
             )
 
-            let itemPath = path.join(outputPath, `${tokenId}`)
+            let metadataPath = path.join(outputPath, `${tokenId}`)
             let metadata = generateMetadata(content, tokenId, selection.selectedTraits)
 
-            fs.writeFileSync(itemPath, JSON.stringify(metadata))
-            generatedImgFiles.add(imgPath)
+            fs.writeFileSync(metadataPath, JSON.stringify(metadata))
+            generatedMetaFiles.add(
+                { imgPath, metadataPath }
+            )
         }
     }
-    return generatedImgFiles
+    return generatedMetaFiles
 }
 
 function generateMetadata(content, tokenId, traits) {

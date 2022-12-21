@@ -12,12 +12,10 @@ const outputPath = path.join(process.cwd(), 'output')
 export const uploadImageToIpfs = async function uploadImageToIpfs() {
 
     let generatedFiles = await generateNFTs(1, layersPath, outputPath)
-    let filePath = generatedFiles.values().next().value
-    var file = fs.readFileSync(filePath);
+    let { imgPath, metadataPath } = generatedFiles.values().next().value
+    let imgFile = fs.readFileSync(imgPath)
 
-    console.log("Generated files path: ", generatedFiles)
-
-    
+    console.log("Generated image path: ", imgPath)
 
     /* configure Infura auth settings */
     const projectId = "2J2EcVANAs4yTjWh28m2ef2XFuf"
@@ -34,13 +32,26 @@ export const uploadImageToIpfs = async function uploadImageToIpfs() {
       }
     })
 
-    /* upload the file */
-    const added = await client.add(file)
-    const url = `https://infura-ipfs.io/ipfs/${added.path}`
+    /* upload the image file */
+    const addedImg = await client.add(imgFile)
+    const ipfsImgUrl = `https://infura-ipfs.io/ipfs/${addedImg.path}`
 
-    console.log("IPFS image url: ", url)
+    console.log("IPFS image url: ", ipfsImgUrl)
 
-    return url
+    var metadataContent = fs.readFileSync(metadataPath)
+    let metadataJson = JSON.parse(metadataContent)
+    metadataJson.image = ipfsImgUrl
+    let metadataString = JSON.stringify(metadataJson)
+    fs.writeFileSync(metadataString)
+    metadataContent = fs.readFileSync(metadataPath)
+
+    /* upload the metadata file */
+    const addedMeta = await client.add(metadataContent)
+    const ipfsMetaUrl = `https://infura-ipfs.io/ipfs/${addedMeta.path}`
+
+    console.log("IPFS metadata url: ", ipfsMetaUrl)
+
+    return ipfsMetaUrl
 }
 
 //module.exports = { uploadImageToIpfs }

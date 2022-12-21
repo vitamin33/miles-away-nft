@@ -1,6 +1,6 @@
 module.exports = {
     metadataTemplate: (tokenId, attributes) => ({
-        image: '<%IMAGE_URL%>',
+        image: '<image_url>',
         name: `NFT #${tokenId}`,
         external_url: 'https://www.miles.away/',
         description: 'Fly-to-Earn NFT game!',
