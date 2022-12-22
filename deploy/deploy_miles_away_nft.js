@@ -1,6 +1,5 @@
-const { ethers } = require("hardhat");
-const hre = require("hardhat");
-let { networkConfig } = require('../helper-hardhat.config')
+const { networkConfig } = require('../helper-hardhat.config');
+//const { uploadImageToIpfs } = require('../uploadImageToIpfs.mjs');
 
 module.exports = async({
   getNamedAccounts,
@@ -27,4 +26,15 @@ module.exports = async({
   const networkName = networkConfig[chainId]['name']
 
   log(`Verify with: \n npx hardhat verify --network ${networkName} ${milesAwayNFT.address}`)
+
+  const uploadImageToIpfs = (await import('../uploadImageToIpfs.mjs')).default
+  const metadataUri = uploadImageToIpfs()
+
+  let transactionResponse = await milesAwayNFT.safeMint(accounts[0].address, metadataUri)
+  let receipt = await transactionResponse.wait(1)
+
+  log("You have made an NFT")
+
+  let tokenURI = await milesAwayNFT.tokenURI(0)
+  log(`NFT metadata URI: ${tokenURI}`)
 }
